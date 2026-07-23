@@ -1,0 +1,103 @@
+:root {
+    --primary: #2D6A4F;
+    --secondary: #8B5E3C;
+    --accent: #74C0E0;
+    --background: #F5F0E8;
+    --text: #2C2C2C;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.navbar {
+    background-color: var(--primary) !important;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: white !important;
+}
+
+.nav-link {
+    color: rgba(255,255,255,0.85) !important;
+}
+
+.nav-link:hover {
+    color: white !important;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: #1e4d38;
+    border-color: #1e4d38;
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #6e4a2e;
+    border-color: #6e4a2e;
+    color: white;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    background-color: white;
+}
+
+.card-header {
+    background-color: var(--primary);
+    color: white;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+a {
+    color: var(--primary);
+}
+
+a:hover {
+    color: var(--secondary);
+}
+
+.alert {
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem rgba(45,106,79,0.25);
+}
+
+.table thead {
+    background-color: var(--primary);
+    color: white;
+}
+
+.badge-open {
+    background-color: var(--primary);
+    color: white;
+}
+
+.badge-closed {
+    background-color: var(--secondary);
+    color: white;
+}
+
+.badge-pending {
+    background-color: var(--accent);
+    color: var(--text);
+}

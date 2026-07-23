@@ -9,7 +9,7 @@ app.config.from_object(Config)
 
 db.init_app(app)
 login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'auth.login'
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -31,8 +31,19 @@ def create_admin():
     else:
         print('Admin already exists')
 
+from auth import auth as auth_blueprint
+app.register_blueprint(auth_blueprint)
+
+from admin import admin as admin_blueprint
+from staff import staff as staff_blueprint
+from user import user as user_blueprint
+
+app.register_blueprint(admin_blueprint)
+app.register_blueprint(staff_blueprint)
+app.register_blueprint(user_blueprint)
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         create_admin()
-        app.run(debug=True)
+        app.run(debug=True, use_reloader=False)
