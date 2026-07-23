@@ -1,1 +1,1 @@
-This application makes planning treks easy.
+This application makes planning treks easy(Trail Quest).
