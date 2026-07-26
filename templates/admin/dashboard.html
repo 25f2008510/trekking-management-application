@@ -1,8 +1,63 @@
-{% extends 'base.html' %}
-
-{% block title %}Admin Dashboard - TrailQuest{% endblock %}
-
+{% extends "base.html" %}
 {% block content %}
-<h2>Welcome, Admin!</h2>
-<p>Admin dashboard coming soon.</p>
+<div class="container mt-4">
+    <h2 class="mb-4">Admin Dashboard</h2>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Treks</h6>
+                    <h3>{{ total_treks }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Users</h6>
+                    <h3>{{ total_users }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Staff</h6>
+                    <h3>{{ total_staff }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Bookings</h6>
+                    <h3>{{ total_bookings }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if pending_staff > 0 %}
+    <div class="alert alert-warning">
+        {{ pending_staff }} staff registration(s) awaiting approval.
+        <a href="{{ url_for('admin.staff_list') }}" class="alert-link">Review now</a>
+    </div>
+    {% endif %}
+
+    <div class="row g-3">
+        <div class="col-md-3">
+            <a href="{{ url_for('admin.treks') }}" class="btn btn-outline-success w-100">Manage Treks</a>
+        </div>
+        <div class="col-md-3">
+            <a href="{{ url_for('admin.staff_list') }}" class="btn btn-outline-success w-100">Manage Staff</a>
+        </div>
+        <div class="col-md-3">
+            <a href="{{ url_for('admin.users_list') }}" class="btn btn-outline-success w-100">Manage Users</a>
+        </div>
+        <div class="col-md-3">
+            <a href="{{ url_for('admin.bookings_list') }}" class="btn btn-outline-success w-100">View Bookings</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

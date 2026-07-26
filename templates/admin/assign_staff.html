@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Assign Staff to {{ trek.name }}</h2>
+
+    <form method="POST" class="mt-3">
+        <div class="mb-3">
+            <label class="form-label">Select Staff</label>
+            <select name="staff_id" class="form-select">
+                <option value="">-- Unassign --</option>
+                {% for staff in staff_list %}
+                <option value="{{ staff.id }}" {% if trek.staff_id == staff.id %}selected{% endif %}>
+                    {{ staff.name }} ({{ staff.email }})
+                </option>
+                {% endfor %}
+            </select>
+            {% if not staff_list %}
+            <div class="form-text text-danger">No approved staff available yet.</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-success">Save Assignment</button>
+        <a href="{{ url_for('admin.treks') }}" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

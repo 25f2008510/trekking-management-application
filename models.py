@@ -36,6 +36,7 @@ class Trek(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     staff_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    staff = db.relationship('User', foreign_keys=[staff_id])
     created_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     
     bookings = db.relationship('Booking', backref='trek', lazy=True)
