@@ -3,6 +3,38 @@
 {% block title %}Staff Dashboard - TrailQuest{% endblock %}
 
 {% block content %}
-<h2>Welcome, {{ current_user.name }}!</h2>
-<p>Staff dashboard coming soon.</p>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Welcome, {{ current_user.name }}!</h2>
+        <a href="{{ url_for('staff.profile') }}" class="btn btn-outline-secondary">My Profile</a>
+    </div>
+
+    <h4 class="mb-3">My Assigned Treks</h4>
+
+    {% if not trek_data %}
+    <div class="alert alert-info">
+        No treks assigned to you yet. Please check back after the admin assigns a trek.
+    </div>
+    {% else %}
+    <div class="row g-3">
+        {% for item in trek_data %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h5 class="card-title">{{ item.trek.name }}</h5>
+                        <span class="badge bg-secondary">{{ item.trek.status }}</span>
+                    </div>
+                    <p class="card-text text-muted mb-1">{{ item.trek.location }} • {{ item.trek.difficulty }}</p>
+                    <p class="card-text mb-1">Duration: {{ item.trek.duration }} day(s)</p>
+                    <p class="card-text mb-1">Slots: {{ item.trek.available_slots }} / {{ item.trek.total_slots }}</p>
+                    <p class="card-text mb-3">Registered Trekkers: <strong>{{ item.registered_count }}</strong></p>
+                    <a href="{{ url_for('staff.trek_detail', trek_id=item.trek.id) }}" class="btn btn-success btn-sm w-100">Manage Trek</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
