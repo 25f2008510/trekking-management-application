@@ -19,17 +19,18 @@
             <ul class="navbar-nav ms-auto">
                 {% if current_user.is_authenticated %}
                     {% if current_user.role == 'admin' %}
-                        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Treks</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Staff</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.treks') }}">Treks</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.users_list') }}">Users</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.staff_list') }}">Staff</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.bookings_list') }}">Bookings</a></li>
                     {% elif current_user.role == 'staff' %}
-                        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">My Treks</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('staff.dashboard') }}">Dashboard</a></li>
                     {% elif current_user.role == 'user' %}
-                        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Browse Treks</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">My Bookings</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('user.dashboard') }}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('user.browse_treks') }}">Browse Treks</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('user.history') }}">My Bookings</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('user.profile') }}">Profile</a></li>
                     {% endif %}
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a></li>
                 {% else %}

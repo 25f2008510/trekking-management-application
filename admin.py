@@ -101,6 +101,11 @@ def edit_trek(trek_id):
 @admin_required
 def delete_trek(trek_id):
     trek = Trek.query.get_or_404(trek_id)
+
+    if trek.bookings:
+        flash('Cannot delete this trek has existing bookings.', 'danger')
+        return redirect(url_for('admin.treks'))
+
     db.session.delete(trek)
     db.session.commit()
     flash('Trek deleted.', 'success')

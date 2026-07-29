@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Browse Treks</h2>
+
+    <form method="GET" action="{{ url_for('user.browse_treks') }}" class="row g-2 mb-4">
+        <div class="col-md-4">
+            <select name="difficulty" class="form-select">
+                <option value="">All Difficulties</option>
+                <option value="Easy" {% if difficulty == 'Easy' %}selected{% endif %}>Easy</option>
+                <option value="Moderate" {% if difficulty == 'Moderate' %}selected{% endif %}>Moderate</option>
+                <option value="Hard" {% if difficulty == 'Hard' %}selected{% endif %}>Hard</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <input type="text" name="location" class="form-control" placeholder="Location"
+                   value="{{ location }}">
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a href="{{ url_for('user.browse_treks') }}" class="btn btn-outline-secondary">Clear</a>
+        </div>
+    </form>
+
+    <div class="row">
+        {% for trek in treks %}
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ trek.name }}</h5>
+                    <p class="card-text">
+                        {{ trek.location }} · {{ trek.difficulty }} · {{ trek.duration }} day(s)<br>
+                        Slots left: {{ trek.available_slots }}/{{ trek.total_slots }}<br>
+                        {{ trek.start_date }} to {{ trek.end_date }}
+                    </p>
+                    <p class="card-text text-muted small">{{ trek.description }}</p>
+                    <form method="POST" action="{{ url_for('user.book_trek', trek_id=trek.id) }}">
+                        <button type="submit" class="btn btn-success btn-sm"
+                                {% if trek.available_slots <= 0 %}disabled{% endif %}>
+                            Book Trek
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No treks match your search.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

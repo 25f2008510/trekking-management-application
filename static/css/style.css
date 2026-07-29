@@ -7,9 +7,14 @@
 }
 
 body {
-    background-color: var(--background);
+    background-image: linear-gradient(rgba(244, 242, 239, 0.9), rgba(245, 240, 232, 0.78)), url('../img/jungle_img.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     color: var(--text);
     font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
 }
 
 .navbar {
