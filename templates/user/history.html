@@ -23,7 +23,7 @@
                         <span class="badge bg-light text-dark">{{ booking.status }}</span>
                     {% endif %}
                 </td>
-                <td>{{ booking.booking_date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ booking.completed_on.strftime('%Y-%m-%d') if booking.completed_on else '-' }}</td>
             </tr>
             {% else %}
             <tr><td colspan="4">No booking history yet.</td></tr>

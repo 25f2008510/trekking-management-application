@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from decorators import staff_required
 from models import db, Trek, Booking, StaffProfile
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 staff = Blueprint('staff', __name__)
 
@@ -55,7 +56,7 @@ def update_trek(trek_id):
             return redirect(url_for('staff.trek_detail', trek_id=trek.id))
         trek.available_slots = available_slots
 
-    if status in ['Open', 'Closed', 'Ongoing', 'Completed']:
+    if status in ['Open', 'Closed', 'Ongoing']:
         trek.status = status
 
     db.session.commit()
@@ -83,3 +84,29 @@ def profile():
         return redirect(url_for('staff.profile'))
 
     return render_template('staff/profile.html', staff_profile=staff_profile)
+
+
+@staff.route('/staff/treks/complete/<int:trek_id>', methods=['POST'])
+@login_required
+@staff_required
+def complete_trek(trek_id):
+    trek = Trek.query.get_or_404(trek_id)
+
+    if trek.staff_id != current_user.id:
+        flash('You are not assigned to this trek.', 'danger')
+        return redirect(url_for('staff.dashboard'))
+
+    if trek.status != 'Open':
+        flash('Only an Open trek can be marked as Completed.', 'warning')
+        return redirect(url_for('staff.trek_detail', trek_id=trek.id))
+
+    trek.status = 'Completed'
+
+    for booking in trek.bookings:
+        if booking.status == 'Booked':
+            booking.status = 'Completed'
+            booking.completed_on = datetime.utcnow()
+
+    db.session.commit()
+    flash('Trek marked as completed.', 'success')
+    return redirect(url_for('staff.trek_detail', trek_id=trek.id))

@@ -33,7 +33,7 @@
                     <div class="col-md-6">
                         <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            {% for s in ['Open', 'Closed', 'Ongoing', 'Completed'] %}
+                            {% for s in ['Open', 'Closed', 'Ongoing'] %}
                             <option value="{{ s }}" {% if trek.status == s %}selected{% endif %}>{{ s }}</option>
                             {% endfor %}
                         </select>
@@ -43,6 +43,21 @@
             </form>
         </div>
     </div>
+
+    {% if trek.status == 'Open' %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title mb-3">Complete Trek</h5>
+            <p class="text-muted">Once this trek has finished, mark it as completed. This will finalize all booked participants and cannot be undone.</p>
+            <form method="POST" action="{{ url_for('staff.complete_trek', trek_id=trek.id) }}"
+                  onsubmit="return confirm('Mark this trek as completed? This will finalize all booked participants.');">
+                <button type="submit" class="btn btn-primary">Mark as Completed</button>
+            </form>
+        </div>
+    </div>
+    {% elif trek.status == 'Completed' %}
+    <div class="alert alert-success">This trek has been marked as completed.</div>
+    {% endif %}
 
     <div class="card shadow-sm">
         <div class="card-body">

@@ -14,7 +14,10 @@ def dashboard():
         return redirect(url_for('auth.dashboard_redirect'))
 
     open_treks = Trek.query.filter_by(status='Open').order_by(Trek.start_date.asc()).all()
-    my_bookings = Booking.query.filter_by(user_id=current_user.id).order_by(Booking.booking_date.desc()).all()
+    my_bookings = Booking.query.filter(
+        Booking.user_id == current_user.id,
+        Booking.status.in_(['Booked', 'Cancelled'])
+    ).order_by(Booking.booking_date.desc()).all()
 
     return render_template('user/dashboard.html',
                             open_treks=open_treks,
@@ -101,10 +104,12 @@ def cancel_booking(booking_id):
 @login_required      #history route
 @user_required
 def history():
-    all_bookings = Booking.query.filter_by(user_id=current_user.id) \
-                                 .order_by(Booking.booking_date.desc()).all()
+    completed_bookings = Booking.query.filter_by(
+        user_id=current_user.id,
+        status='Completed'
+    ).order_by(Booking.completed_on.desc()).all()
 
-    return render_template('user/history.html', bookings=all_bookings)
+    return render_template('user/history.html', bookings=completed_bookings)
 
 @user.route('/user/profile', methods=['GET', 'POST'])
 @login_required   #user profile route
